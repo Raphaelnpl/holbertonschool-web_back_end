@@ -1,12 +1,13 @@
 export default function taskBlock(trueOrFalse) {
-    const task = false;
-    const task2 = true;
-  
-    if (trueOrFalse) {
-      let task = true;
-      let task2 = false;
-    }
-  
-    return [task, task2];
+  let task = false;  // Utilisation de let
+  let task2 = true;  // Utilisation de let
+
+  if (trueOrFalse) {
+    let task = true;  // Déclaration d'une nouvelle variable task dans ce bloc
+    let task2 = false;  // Déclaration d'une nouvelle variable task2 dans ce bloc
   }
+
+  return [task, task2];  // Ces variables ne seront pas affectées par le bloc if
+}
+
   
