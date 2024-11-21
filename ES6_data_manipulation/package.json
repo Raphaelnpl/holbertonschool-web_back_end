@@ -1,0 +1,13 @@
+{
+    "name": "es6_data_manipulation",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+      "dev": "node"
+    },
+    "author": "",
+    "license": "ISC"
+  }
+  
