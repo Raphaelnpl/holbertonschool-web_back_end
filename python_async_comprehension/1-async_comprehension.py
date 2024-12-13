@@ -4,9 +4,11 @@ A coroutine that collects random numbers from an async generator using
 async comprehension.
 """
 
-import asyncio
+import importlib
 from typing import List
-from 0-async_generator import async_generator
+
+# Dynamically import the module
+async_generator = importlib.import_module('0-async_generator').async_generator
 
 async def async_comprehension() -> List[float]:
     """
