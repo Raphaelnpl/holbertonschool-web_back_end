@@ -1,45 +1,34 @@
 const fs = require('fs');
 
-function countStudents(fileName) {
-  const studentsByField = {};
-  const fieldsCount = {};
-  let totalStudents = 0;
-
+function countStudents(path) {
   try {
-    // Read the CSV file
-    const content = fs.readFileSync(fileName, 'utf-8');
-    const lines = content.trim().split('\n');
+    const data = fs.readFileSync(path, 'utf-8');
+    const lines = data.split('\n').filter(line => line.trim() !== '');
 
-    // Process the content of the file
-    for (let i = 1; i < lines.length; i += 1) { // Start at 1 to skip the header
-      if (lines[i]) {
-        totalStudents += 1;
-        const [firstName, , , field] = lines[i].split(',');
+    const students = lines.slice(1);
 
-        // Add the student to the list of students for the field
-        if (!studentsByField[field]) {
-          studentsByField[field] = [];
+    const fields = {};
+    let total = 0;
+
+    students.forEach((line) => {
+      const parts = line.split(',');
+      if (parts.length >= 4) {
+        const firstname = parts[0];
+        const field = parts[3];
+        if (!fields[field]) {
+          fields[field] = [];
         }
-        studentsByField[field].push(firstName);
-
-        // Count the number of students in the field
-        if (fieldsCount[field]) {
-          fieldsCount[field] += 1;
-        } else {
-          fieldsCount[field] = 1;
-        }
+        fields[field].push(firstname);
+        total++;
       }
-    }
+    });
 
-    // Print the number of students
-    console.log(`Number of students: ${totalStudents}`);
-
-    // Print the number of students in each field
-    for (const [field, count] of Object.entries(fieldsCount)) {
-      console.log(`Number of students in ${field}: ${count}. List: ${studentsByField[field].join(', ')}`);
+    console.log(`Number of students: ${total}`);
+    for (const field in fields) {
+      const names = fields[field].join(', ');
+      console.log(`Number of students in ${field}: ${fields[field].length}. List: ${names}`);
     }
   } catch (error) {
-    // Error reading the file
     throw new Error('Cannot load the database');
   }
 }
